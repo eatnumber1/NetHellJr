@@ -1,6 +1,3 @@
-#include "direc.h"
-#include <stdint.h>
-#include <string.h>
 #include "monst.h"
 #include "world.h"
 #include "screen.h"

@@ -1,8 +1,8 @@
-#include "direc.h"
-#include <stdint.h>
 #include "monst.h"
 #include "world.h"
 #include "screen.h"
+
+#include <stdint.h>
 
 int gd = CGAC1, gm; /* CGAC1 =1 --> 320x200 palette 1; 1 page */
 int RES_X = 320, RES_Y = 200;
@@ -16,6 +16,7 @@ int HUD_X = 20, HUD_Y = 180;
 void screen_display_world(World *world ){
 	size_t i;
 	Monster *mon;
+	Ray *ray;
 
 	cleardevice();
 	screen_kill_graphics();
@@ -36,7 +37,7 @@ void screen_display_world(World *world ){
 		);
 
 	for(i=0; i<MAX_MONSTERS; ++i){
-		mon = &world->monsters[i];
+		mon = &world->monsters.val[i];
 		if(mon->hp > 0){ /* alive */
 			screen_draw_dude(
 				screen_grid_to_coordinate(mon->pos.x),
@@ -44,6 +45,19 @@ void screen_display_world(World *world ){
 				mon->sym,
 				CGA_WHITE
 			);
+		}
+	}
+
+	for(i=0; i<MAX_RAYS; ++i){
+		ray = &world -> rays[i];
+		if(ray->start.x < 0 || ray->start.y < 0){
+		}
+		else{
+			screen_draw_ray(screen_grid_to_coordinate(ray->start.x),
+					  screen_grid_to_coordinate(ray->start.y),
+					  ray->angle,
+					  CGA_RED
+				);
 		}
 	}
 	/*screen_kill_graphics();*/

@@ -1,18 +1,15 @@
 #include "direc.h"
 
-#include <stdint.h>
-
 #include "monst.h"
-#include "world.h"
 #include "screen.h"
 
 #include <stdbool.h>
-
+#include <stdint.h>
 #include <stdio.h>
 #include <string.h>
 #include <assert.h>
 
-void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, mon_pos_t x, mon_pos_t y ) {
+void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y ) {
 	assert(hp <= maxhp);
 	m->sym = sym;
 	m->hp = hp;
@@ -20,13 +17,17 @@ void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp
 	monster_set_position(m, x, y);
 }
 
-void monster_init( World *w, char sym, uint_fast8_t hp, uint_fast8_t maxhp, mon_pos_t x, mon_pos_t y ) {
-	monster_init_you(&w->monsters[w->nmonsters++], sym, hp, maxhp, x, y);
+void monster_init( MonsterList *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y ) {
+	monster_init_you(&m->val[m->size++], sym, hp, maxhp, x, y);
 }
 
-void monster_set_position( Monster *mon, mon_pos_t x, mon_pos_t y ) {
+void monster_set_position( Monster *mon, pos_t x, pos_t y ) {
 	mon->pos.x = x;
 	mon->pos.y = y;
+}
+
+void monster_list_init( MonsterList *m ) {
+	m->size = 0;
 }
 
 void monster_move( Monster *m, Direction d ) {

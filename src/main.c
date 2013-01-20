@@ -1,7 +1,3 @@
-#include "direc.h"
-
-#include <stdint.h>
-
 #include "monst.h"
 #include "world.h"
 #include "screen.h"
@@ -10,6 +6,7 @@
 #include <stdbool.h>
 #include <stddef.h>
 #include <process.h>
+#include <stdint.h>
 
 static void key_down( World *world ) {
 	monster_move(&world->you, DIRECTION_DOWN);
@@ -37,8 +34,12 @@ int main() {
 	world_init(&world);
 
 	monster_init_you(&world.you, '@', 1, 30, 20, 15);
-	monster_init(&world, 'Z', 5, 10, 5, 8);
-	monster_init(&world, 'V', 5, 10, 8, 5);
+	monster_init(&world.monsters, 'Z', 5, 10, 5, 8);
+	monster_init(&world.monsters, 'V', 5, 10, 8, 5);
+
+	world.rays[0].start.x = 6;
+	world.rays[0].start.y = 9;
+	world.rays[0].angle = 3;
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
