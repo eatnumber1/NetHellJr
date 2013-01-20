@@ -13,15 +13,15 @@ void ray_list_init( RayList *rays ) {
 
 Direction ray_get_flipside(Direction angle){
 	switch(angle){
-		case 0:
-		case 1:
-		case 2:
-		case 3:
+		case DIREC_N,
+		case DIREC_NE,
+		case DIREC_E,
+		case DIREC_SE,
 			return angle+4;
-		case 4:
-		case 5:
-		case 6:
-		case 7:
+		case DIREC_S,
+		case DIREC_SW,
+		case DIREC_W,
+		case DIREC_NW
 			return angle-4;
 
 	}
