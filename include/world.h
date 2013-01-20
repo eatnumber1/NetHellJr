@@ -15,6 +15,8 @@ typedef enum {
 	WORLD_ERR_COLLIDE
 } WorldError;
 
+void world_init( World *w );
+
 #endif
 
 /* vim:set ff=dos: */
