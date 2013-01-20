@@ -60,7 +60,8 @@ void world_tick( World *world ) {
 			ray_init(&world->rays,
 				screen_grid_to_coordinate(ray->start.x),
 				screen_grid_to_coordinate(ray->start.y),
-				ray->angle);
+				ray->angle,
+				DEFAULT_RAY_LIFETIME);
 		}
 	}
 }

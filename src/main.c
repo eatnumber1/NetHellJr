@@ -9,6 +9,7 @@
 #include <process.h>
 #include <stdint.h>
 
+
 static void key_down( World *world ) {
 	world_move_monster(world, &world->you, DIREC_S);
 }
@@ -26,19 +27,19 @@ static void key_right( World *world ) {
 }
 
 static void key_fire_left( World *world ) {
-	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_W);
+	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_W, DEFAULT_RAY_LIFETIME);
 }
 
 static void key_fire_right( World *world ) {
-	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_E);
+	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_E, DEFAULT_RAY_LIFETIME);
 }
 
 static void key_fire_up( World *world ) {
-	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_N);
+	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_N, DEFAULT_RAY_LIFETIME);
 }
 
 static void key_fire_down( World *world ) {
-	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_S);
+	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_S, DEFAULT_RAY_LIFETIME);
 }
 
 static void quit() {
@@ -54,14 +55,14 @@ int main() {
 	monster_init(&world.monsters, 'Z', 5, 10, 5, 8);
 	monster_init(&world.monsters, 'V', 5, 10, 8, 5);
 
-	ray_init(&world.rays, 6, 9, 0);
-	ray_init(&world.rays, 6, 9, 1);
-	ray_init(&world.rays, 6, 9, 2);
-	ray_init(&world.rays, 6, 9, 3);
-	ray_init(&world.rays, 6, 9, 4);
-	ray_init(&world.rays, 6, 9, 5);
-	ray_init(&world.rays, 6, 9, 6);
-	ray_init(&world.rays, 6, 9, 7);
+	ray_init(&world.rays, 6, 9, 0, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 1, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 2, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 3, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 4, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 5, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 6, DEFAULT_RAY_LIFETIME);
+	ray_init(&world.rays, 6, 9, 7, DEFAULT_RAY_LIFETIME);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
