@@ -6,9 +6,17 @@
 
 #include <stdbool.h>
 #include <assert.h>
+#include <Math.h>
+
 
 int world_fall_off_edge(int x, int y){
 	return (( x < 0 || x > 39) || ( y < 0 || y > 23));
+}
+
+int intersects(Monster* monster, Ray* ray){
+	return
+	((abs(ray->start.x)-abs(monster->pos.x)) < 4) &&
+	((abs(ray->start.y)-abs(monster->pos.y)) < 4);
 }
 
 Direction world_direction_of( Monster *me, Monster *them ) {
@@ -90,6 +98,7 @@ void world_tick( World *world ) {
 				ray->age -= 1;
 
 				/* check intersection against peeps + reduce health */
+				
 			}
 		}
 	}
