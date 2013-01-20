@@ -56,7 +56,7 @@ void screen_display_world(World *world ){
 			screen_draw_ray(screen_grid_to_coordinate(ray->start.x),
 					  screen_grid_to_coordinate(ray->start.y),
 					  ray->angle,
-					  CGA_RED
+					  (ray->age>2?CGA_LIGHTGREEN:CGA_LIGHTRED)
 				);
 		}
 	}
