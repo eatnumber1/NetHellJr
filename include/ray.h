@@ -6,7 +6,7 @@
 #include <stdbool.h>
 
 #define MAX_RAYS 128
-#define DEFAULT_RAY_LIFETIME 6
+#define DEFAULT_RAY_LIFETIME 9
 #define RAY_SPEED 4
 #define RAY_DAMAGE 1
 

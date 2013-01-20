@@ -5,6 +5,7 @@
 #include "screen.h"
 
 #include <stdint.h>
+#include <stdio.h>
 
 int gd = CGAC1, gm; /* CGAC1 =1 --> 320x200 palette 1; 1 page */
 int RES_X = 320, RES_Y = 200;
@@ -94,9 +95,24 @@ void screen_draw_health(int hp, int maxhp){
 			setcolor(CGA_GREEN);
 		}
 	}
+	else{
+		screen_display_death_message();
+	}
 	outtextxy(HUD_X, HUD_Y, status);	
 }
 
+void screen_display_death_message(){
+	cleardevice();
+	screen_initialize_graphics();
+	settextjustify(CENTER_TEXT,CENTER_TEXT);
+	settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
+	outtextxy(CENTER_X, CENTER_Y, "It hits. It hits. You die.");
+	getch();
+	screen_kill_graphics();
+	printf("Better luck next time.");
+	exit(0);
+
+}
 void screen_debug_pos(int x, int y){
 	char status[8];
 

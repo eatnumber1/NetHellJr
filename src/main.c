@@ -8,7 +8,7 @@
 #include <stddef.h>
 #include <process.h>
 #include <stdint.h>
-
+#include <stdlib.h>
 
 static void key_s( World *world ) {
 	world_move_monster(world, &world->you, DIREC_S);
@@ -70,7 +70,7 @@ int main() {
 	World world;
 	world_init(&world);
 
-	monster_init_you(&world.you, '@', 30, 30, 20, 15);
+	monster_init_you(&world.you, '@', 50, 50, 20, 15);
 	monster_init(&world.monsters, 'Z', 10, 10, 5, 15);
 	monster_init(&world.monsters, 'V', 10, 10, 35, 15);
 
@@ -100,6 +100,9 @@ int main() {
 	while( true ) {
 		screen_display_world(&world);
 		input_read_and_process();
+		if(random(3)==1){
+			monster_init(&world.monsters, random(2)?random(26)+64:random(26)+96, 10, 10, random(39), random(27));
+		}
 		world_tick(&world);
 	}
 }

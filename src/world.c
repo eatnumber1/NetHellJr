@@ -44,7 +44,7 @@ Direction world_direction_of( Monster *me, Monster *them ) {
 		} else if( me->pos.y < them->pos.y ) {
 			d = DIREC_S;
 		} else {
-			assert(false);
+			/* assert(false); */
 		}
 	}
 	return d;
@@ -73,7 +73,8 @@ static bool do_monster_ai( Monster *m, World *w ) {
 			world_move_monster(w, m, d);
 			break;
 		default:
-			assert(false);
+			/* assert(false); */
+			break;
 	}
 	return true;
 }
@@ -122,7 +123,6 @@ static bool do_ray_movement( Ray *ray, World *world ) {
 			break;
 	}
 	if(world_fall_off_edge(ray->start.x,ray->start.y)){
-		/*could do reflection here if we have time */
 		ray->age-=1;
 		ray->angle = ray_get_flipside(ray->angle);
 	} else {
