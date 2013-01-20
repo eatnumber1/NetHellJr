@@ -4,6 +4,7 @@
 #include "direc.h"
 
 #include <stdint.h>
+#include <stdbool.h>
 
 #define MAX_MONSTERS 128
 
@@ -22,6 +23,7 @@ void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp
 void monster_init( MonsterList *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y );
 void monster_set_position( Monster *mon, pos_t x, pos_t y );
 void monster_list_init( MonsterList *m );
+bool monster_is_alive( Monster *m );
 
 #endif
 /* vim:set ff=dos: */

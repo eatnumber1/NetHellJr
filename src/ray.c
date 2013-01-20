@@ -3,7 +3,7 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <string.h>
-
+#include <stddef.h>
 
 void ray_list_init( RayList *rays ) {
 	rays->size = 0;
@@ -29,13 +29,13 @@ Direction ray_get_flipside(Direction angle){
 
 void ray_init( RayList *rays, pos_t x, pos_t y, Direction angle, age_t age) {
 	static size_t i = 0;
-	Ray *r;
+	Ray *r = NULL;
 
 	if( i == MAX_RAYS ) i = 0;
 	for( ; i < MAX_RAYS; i++ ) {
 		if( !ray_is_alive(r = &rays->val[i]) ) break;
 	}
-	if( i == MAX_RAYS ) assert(false);
+	if( r == NULL ) assert(false);
 
 	rays->size++;
 	r->start.x = x;

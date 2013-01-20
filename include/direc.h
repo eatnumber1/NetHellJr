@@ -17,7 +17,7 @@ typedef enum {
 typedef uint_fast16_t pos_t;
 typedef uint_fast8_t age_t;
 
-typedef struct _Position {
+typedef struct {
 	pos_t x, y;
 } Position;
 
