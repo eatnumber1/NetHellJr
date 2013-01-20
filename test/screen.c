@@ -20,4 +20,13 @@ void display_world( World *world ) {
 	printf("\n");
 }
 
+void screen_get_dimensions( size_t *x, size_t *y ) {
+	*x = 40;
+	*y = 30;
+}
+
+void screen_show_chr( char c ) {
+	printf("chr '%c' (%x)\n", c, c);
+}
+
 /* vim:set ff=dos: */

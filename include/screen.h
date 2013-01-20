@@ -3,7 +3,12 @@
 
 #include "world.h"
 
-void display_world( World *world );
+#include <stdint.h>
+
+void screen_display_world( World *world );
+void screen_get_dimensions( size_t *x, size_t *y );
+
+void screen_show_chr( char c );
 
 #endif
 

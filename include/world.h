@@ -3,6 +3,8 @@
 
 #include <stdint.h>
 
+#include "input.h"
+
 typedef uint_fast16_t mon_pos_t;
 
 struct _MonsterPosition {
@@ -23,7 +25,15 @@ typedef struct {
 	size_t nmonsters;
 } World;
 
+typedef enum {
+	DIRECTION_UP,
+	DIRECTION_DOWN,
+	DIRECTION_LEFT,
+	DIRECTION_RIGHT
+} Direction;
+
 void monster_set_position( Monster *mon, mon_pos_t x, mon_pos_t y );
+void monster_move( Monster *m, Direction d );
 
 #endif
 

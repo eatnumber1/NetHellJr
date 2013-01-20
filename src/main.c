@@ -4,8 +4,26 @@
 
 #include <stdint.h>
 #include <stdbool.h>
+#include <stddef.h>
+#include <process.h>
 
 #include <stdio.h>
+
+static void key_down( World *world ) {
+	monster_move(&world->you, DIRECTION_DOWN);
+}
+
+static void key_up( World *world ) {
+	monster_move(&world->you, DIRECTION_UP);
+}
+
+static void key_left( World *world ) {
+	monster_move(&world->you, DIRECTION_LEFT);
+}
+
+static void key_right( World *world ) {
+	monster_move(&world->you, DIRECTION_RIGHT);
+}
 
 int main() {
 	World world;
@@ -15,21 +33,21 @@ int main() {
 	world.monsters[0].hp = 5;
 	world.monsters[0].maxhp = 10;
 	monster_set_position(&world.monsters[0], 5, 8);
-	world.monsters[0].pos.x = 5;
-	world.monsters[0].pos.y = 8;
 
 	world.you.sym = '@';
 	world.you.hp = 1;
 	world.you.maxhp = 30;
-	monster_set_position(&world.you, 1, 1);
-	world.you.pos.x = 1;
-	world.you.pos.y = 1;
+	monster_set_position(&world.you, 0, 0);
 
-	display_world(&world);
+	input_new_command_char('q', (CommandHandler) exit, NULL);
+	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
+	input_new_command_escaped(0, 'P', (CommandHandler) key_down, &world);
+	input_new_command_escaped(0, 'K', (CommandHandler) key_left, &world);
+	input_new_command_escaped(0, 'M', (CommandHandler) key_right, &world);
 
 	while( true ) {
-		Key key = getkey();
-		printf("Got key %c\n", key);
+		display_world(&world);
+		input_read_and_process();
 	}
 }
 
