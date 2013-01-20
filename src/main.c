@@ -2,6 +2,7 @@
 #include "world.h"
 #include "screen.h"
 #include "input.h"
+#include "ray.h"
 
 #include <stdbool.h>
 #include <stddef.h>
@@ -37,9 +38,7 @@ int main() {
 	monster_init(&world.monsters, 'Z', 5, 10, 5, 8);
 	monster_init(&world.monsters, 'V', 5, 10, 8, 5);
 
-	world.rays[0].start.x = 6;
-	world.rays[0].start.y = 9;
-	world.rays[0].angle = 3;
+	ray_init(&world.rays, 6, 9, 3);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);

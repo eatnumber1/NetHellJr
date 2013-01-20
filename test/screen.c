@@ -1,3 +1,4 @@
+#include "ray.h"
 #include "monst.h"
 #include "world.h"
 #include "screen.h"

@@ -1,4 +1,5 @@
 #include "monst.h"
+#include "ray.h"
 #include "world.h"
 #include "screen.h"
 
@@ -48,8 +49,8 @@ void screen_display_world(World *world ){
 		}
 	}
 
-	for(i=0; i<world->nrays; ++i){
-		ray = &world -> rays[i];
+	for(i=0; i<world->rays.size; ++i){
+		ray = &world->rays.val[i];
 		if(ray->start.x < 0 || ray->start.y < 0){
 		}
 		else{
