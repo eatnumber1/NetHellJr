@@ -101,6 +101,52 @@ void screen_draw_health(int hp, int maxhp){
 	outtextxy(HUD_X, HUD_Y, status);	
 }
 
+void screen_display_start_message(){
+        cleardevice();
+        screen_initialize_graphics();
+        settextjustify(CENTER_TEXT,CENTER_TEXT);
+        settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
+
+	setbkcolor(BLUE);
+	setcolor(1);
+        outtextxy(CENTER_X, CENTER_Y-16, "NetHell Jr");
+	setcolor(2);
+	outtextxy(CENTER_X, CENTER_Y, "IBM PC-Jr Compatible Nethack-Universe");
+	setcolor(3);
+	outtextxy(CENTER_X, CENTER_Y+16, "TURN-BASED STRATEGY BULLET-HELL");
+        getch();
+
+
+	cleardevice();
+	screen_initialize_graphics();
+	setbkcolor(MAGENTA);
+	setcolor(1);
+        settextjustify(CENTER_TEXT,CENTER_TEXT);
+        settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
+
+	outtextxy(CENTER_X, CENTER_Y-16, "Use WASD keys for zapping your wand.");
+	getch();
+	setcolor(2);
+	outtextxy(CENTER_X, CENTER_Y, "Use vim keys (HJKL) to move.");
+	outtextxy(CENTER_X, CENTER_Y+16, "+YUBN diagonals, and Q to Quit.");
+	getch();
+	setbkcolor(BLACK);
+
+        cleardevice();
+        screen_initialize_graphics();
+        setbkcolor(LIGHTGRAY);
+        setcolor(1);
+        settextjustify(CENTER_TEXT,CENTER_TEXT);
+        settextstyle(DEFAULT_FONT, HORIZ_DIR, 1);
+
+        outtextxy(CENTER_X, CENTER_Y-16, "Choose your moves wisely,");
+        outtextxy(CENTER_X, CENTER_Y, "to avoid enemy attacks.");
+        getch();
+        setbkcolor(BLACK);
+	
+}
+
+
 void screen_display_death_message(){
 	cleardevice();
 	screen_initialize_graphics();

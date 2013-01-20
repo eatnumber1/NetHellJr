@@ -97,6 +97,8 @@ int main() {
 	input_new_command_char('.', (CommandHandler) key_wait, NULL);
 
 	screen_initialize_graphics();
+	screen_display_start_message();
+
 	while( true ) {
 		screen_display_world(&world);
 		input_read_and_process();

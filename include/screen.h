@@ -28,6 +28,8 @@ void screen_get_dimensions( size_t *x, size_t *y );
 void screen_show_chr( char c );
 void screen_debug_pos(int x, int y);
 void screen_display_death_message();
+void screen_display_start_message();
+
 #endif
 
 /* vim:set ff=dos: */
