@@ -3,6 +3,9 @@
 
 void display_world(World *world ){
 	int monster_index;
+
+	initialize_graphics();
+	cleardevice();
 	draw_health(world->you->hp, world->you->maxhp);
 	for(i=0; i<MAX_MONSTERS; ++i){
 		Monster mon = world->monsters[monster_index];
@@ -15,25 +18,11 @@ void display_world(World *world ){
 				);
 		}
 	}
+	kill_graphics();
 }
 
 int grid_to_coordinate(int x){
 	return x*8+4;
-}
-void main(){
-	int i;
-
-	initialize_graphics();
-	draw_dude(CENTER_X,CENTER_Y, '@', CGA_RED);
-	draw_health(50,64);
-	getch();
-	cleardevice();
-	for(i=0; i<8; ++i){
-		draw_ray(CENTER_X, CENTER_Y, i, CGA_GREEN);
-		getch();
-		cleardevice();
-	}
-	kill_graphics();
 }
 
 void initialize_graphics(){
@@ -114,15 +103,6 @@ void draw_dude(int x, int y, char ch, int color){
 	settextjustify(CENTER_TEXT,CENTER_TEXT);
 	settextstyle(DEFAULT_FONT, HORIZ_DIR, 1); /* 8x8 bitmap font */
 	outtextxy(x,y,symbol);
-}
-
-void screen_get_dimensions( size_t *x, size_t *y ) {
-	*x = 40;
-	*y = 30;
-}
-
-void screen_show_chr( char c ) {
-	printf("chr '%c' (%x)\n", c, c);
 }
 
 /* vim:set ff=dos: */
