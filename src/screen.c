@@ -15,6 +15,7 @@ int HUD_X = 20, HUD_Y = 180;
 void screen_display_world(World *world ){
 	size_t i;
 	Monster *mon;
+	Ray *ray;
 
 	cleardevice();
 	screen_kill_graphics();
@@ -43,6 +44,19 @@ void screen_display_world(World *world ){
 				mon->sym,
 				CGA_WHITE
 			);
+		}
+	}
+
+	for(i=0; i<MAX_RAYS; ++i){
+		ray = &world -> rays[i];
+		if(ray->start.x < 0 || ray->start.y < 0){
+		}
+		else{
+			screen_draw_ray(screen_grid_to_coordinate(ray->start.x),
+					  screen_grid_to_coordinate(ray->start.y),
+					  ray->angle,
+					  CGA_RED
+				);
 		}
 	}
 	/*screen_kill_graphics();*/

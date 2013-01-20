@@ -6,23 +6,32 @@
 #include "input.h"
 
 typedef uint_fast16_t mon_pos_t;
+typedef uint_fast8_t angle_t;
 
-struct _MonsterPosition {
+struct _Position {
 	mon_pos_t x, y;
 };
 
 typedef struct {
+	struct _Position start;
+	angle_t angle;
+} Ray;
+
+typedef struct {
 	char sym;
 	uint_fast8_t maxhp, hp;
-	struct _MonsterPosition pos;
+	struct _Position pos;
 } Monster;
 
 #define MAX_MONSTERS 128
+#define MAX_RAYS 128
 
 typedef struct {
 	Monster you;
 	Monster monsters[MAX_MONSTERS];
 	size_t nmonsters;
+	Ray rays[MAX_RAYS];
+	size_t nrays;
 } World;
 
 typedef enum {

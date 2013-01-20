@@ -26,12 +26,17 @@ static void key_right( World *world ) {
 int main() {
 	World world;
 	world.nmonsters = 1;
+	world.nrays = 1;
 
 	world.monsters[0].sym = 'Z';
 	world.monsters[0].hp = 5;
 	world.monsters[0].maxhp = 10;
 	monster_set_position(&world.monsters[0], 5, 8);
 
+	world.rays[0].start.x = 6;
+	world.rays[0].start.y = 9;
+	world.rays[0].angle = 3;
+	
 	world.you.sym = '@';
 	world.you.hp = 1;
 	world.you.maxhp = 30;
