@@ -105,4 +105,6 @@ void draw_dude(int x, int y, char ch, int color){
 	outtextxy(x,y,symbol);
 }
 
+void screen_show_chr( char c ) {}
+
 /* vim:set ff=dos: */
