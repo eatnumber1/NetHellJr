@@ -21,7 +21,6 @@ typedef struct {
 void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y );
 void monster_init( MonsterList *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y );
 void monster_set_position( Monster *mon, pos_t x, pos_t y );
-void monster_move( Monster *m, Direction d );
 void monster_list_init( MonsterList *m );
 
 #endif

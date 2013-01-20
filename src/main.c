@@ -10,19 +10,19 @@
 #include <stdint.h>
 
 static void key_down( World *world ) {
-	monster_move(&world->you, DIRECTION_DOWN);
+	world_move_monster(world, &world->you, DIRECTION_DOWN);
 }
 
 static void key_up( World *world ) {
-	monster_move(&world->you, DIRECTION_UP);
+	world_move_monster(world, &world->you, DIRECTION_UP);
 }
 
 static void key_left( World *world ) {
-	monster_move(&world->you, DIRECTION_LEFT);
+	world_move_monster(world, &world->you, DIRECTION_LEFT);
 }
 
 static void key_right( World *world ) {
-	monster_move(&world->you, DIRECTION_RIGHT);
+	world_move_monster(world, &world->you, DIRECTION_RIGHT);
 }
 
 static void quit() {
