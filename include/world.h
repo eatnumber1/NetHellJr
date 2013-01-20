@@ -10,6 +10,11 @@ typedef struct {
 	MonsterList monsters;
 } World;
 
+typedef enum {
+	WORLD_ERR_OK,
+	WORLD_ERR_COLLIDE
+} WorldError;
+
 #endif
 
 /* vim:set ff=dos: */
