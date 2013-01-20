@@ -17,9 +17,8 @@ void world_tick( World *world ) {
 
 	for(i=0; i<world->rays.size; ++i){
 		ray = &world->rays.val[i];
-		if(ray->start.x < 0 || ray->start.y < 0){
-		}
-		else{
+		
+		if(ray->age >= 0){
 			switch(ray->angle){
 				case DIREC_N:
 					ray->start.y-=RAY_SPEED;
@@ -52,16 +51,19 @@ void world_tick( World *world ) {
 			}
 			if(world_fall_off_edge(ray->start.x,ray->start.y)){
 				/*could do reflection here if we have time */
-				ray->start.x= -1, ray->start.y= -1;
+				ray->age-=1;
+				ray->angle = ray_get_flipside(ray->angle);
 			}
 			else{
+				ray->age -= 1;
+
 				/* check intersection against peeps + reduce health */
 			}
 			ray_init(&world->rays,
 				screen_grid_to_coordinate(ray->start.x),
 				screen_grid_to_coordinate(ray->start.y),
 				ray->angle,
-				DEFAULT_RAY_LIFETIME);
+				ray->age);
 		}
 	}
 }

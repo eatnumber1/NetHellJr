@@ -8,7 +8,7 @@
 
 
 
-#define MAX_RAYS 128
+#define MAX_RAYS 1024
 #define DEFAULT_RAY_LIFETIME 6
 
 
