@@ -1,43 +1,55 @@
 #include "screen.h"
 #include "world.h"
 
-void display_world(World *world ){
-	int monster_index;
+#include <stdint.h>
 
-	initialize_graphics();
+int gd = CGAC1, gm; /* CGAC1 =1 --> 320x200 palette 1; 1 page */
+int RES_X = 320, RES_Y = 200;
+int GRID_MAX_X = 40, GRID_MAX_Y = 30;
+int CENTER_X = 160, CENTER_Y = 100;
+
+int RAY_LENGTH=20, RAY_LENGTH_45=14;
+
+int HUD_X = 20, HUD_Y = 180;
+
+void screen_display_world(World *world ){
+	size_t i;
+	Monster *mon;
+
+	screen_initialize_graphics();
 	cleardevice();
-	draw_health(world->you->hp, world->you->maxhp);
+	screen_draw_health(world->you.hp, world->you.maxhp);
 	for(i=0; i<MAX_MONSTERS; ++i){
-		Monster mon = world->monsters[monster_index];
+		mon = &world->monsters[i];
 		if(mon->hp > 0){ /* alive */
-			draw_dude(
-				grid_to_coordinate(mon->pos->x),
-				grid_to_coordinate(mon->pos->y),
+			screen_draw_dude(
+				screen_grid_to_coordinate(mon->pos.x),
+				screen_grid_to_coordinate(mon->pos.y),
 				mon->sym,
 				CGA_WHITE
-				);
+			);
 		}
 	}
-	kill_graphics();
+	/*screen_kill_graphics();*/
 }
 
-int grid_to_coordinate(int x){
+int screen_grid_to_coordinate(int x){
 	return x*8+4;
 }
 
-void initialize_graphics(){
+void screen_initialize_graphics(){
 	initgraph(&gd, &gm, "C:\\TC\\BGI");
 }
 
-void kill_graphics(){
+void screen_kill_graphics(){
 	closegraph();
 }
 
-void tick(){
+void screen_tick(){
 
 }
 
-void draw_health(int hp, int maxhp){
+void screen_draw_health(int hp, int maxhp){
 	char status[8];
 
 	sprintf(status, "%d/%d", hp, maxhp);
@@ -53,7 +65,7 @@ void draw_health(int hp, int maxhp){
 	outtextxy(HUD_X, HUD_Y, status);	
 }
 
-void draw_ray(int startX, int startY, int angle, int color){
+void screen_draw_ray(int startX, int startY, int angle, int color){
 	int endX, endY;
 
 	setcolor(color);
@@ -95,7 +107,7 @@ void draw_ray(int startX, int startY, int angle, int color){
 	line(startX, startY, endX, endY);
 }
 
-void draw_dude(int x, int y, char ch, int color){
+void screen_draw_dude(int x, int y, char ch, int color){
 	char symbol[2];
 
 	sprintf(symbol, "%c", ch);
@@ -105,6 +117,13 @@ void draw_dude(int x, int y, char ch, int color){
 	outtextxy(x,y,symbol);
 }
 
-void screen_show_chr( char c ) {}
+void screen_show_chr( char c ) {
+	(void) c;
+}
+
+void screen_get_dimensions( size_t *x, size_t *y ) {
+	*x = 40;
+	*y = 30;
+}
 
 /* vim:set ff=dos: */

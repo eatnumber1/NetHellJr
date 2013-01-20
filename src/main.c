@@ -7,8 +7,6 @@
 #include <stddef.h>
 #include <process.h>
 
-#include <stdio.h>
-
 static void key_down( World *world ) {
 	monster_move(&world->you, DIRECTION_DOWN);
 }
@@ -37,7 +35,7 @@ int main() {
 	world.you.sym = '@';
 	world.you.hp = 1;
 	world.you.maxhp = 30;
-	monster_set_position(&world.you, 0, 0);
+	monster_set_position(&world.you, 20, 15);
 
 	input_new_command_char('q', (CommandHandler) exit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
@@ -46,7 +44,7 @@ int main() {
 	input_new_command_escaped(0, 'M', (CommandHandler) key_right, &world);
 
 	while( true ) {
-		display_world(&world);
+		screen_display_world(&world);
 		input_read_and_process();
 	}
 }
