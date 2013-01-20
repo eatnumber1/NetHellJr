@@ -5,7 +5,7 @@
 
 int gd = CGAC1, gm; /* CGAC1 =1 --> 320x200 palette 1; 1 page */
 int RES_X = 320, RES_Y = 200;
-int GRID_MAX_X = 40, GRID_MAX_Y = 30;
+int GRID_MAX_X = 39, GRID_MAX_Y = 23;
 int CENTER_X = 160, CENTER_Y = 100;
 
 int RAY_LENGTH=20, RAY_LENGTH_45=14;
@@ -35,7 +35,7 @@ void screen_display_world(World *world ){
 		CGA_LIGHTGREEN
 		);
 
-	for(i=0; i<MAX_MONSTERS; ++i){
+	for(i=0; i<world->nmonsters; ++i){
 		mon = &world->monsters[i];
 		if(mon->hp > 0){ /* alive */
 			screen_draw_dude(
@@ -47,7 +47,7 @@ void screen_display_world(World *world ){
 		}
 	}
 
-	for(i=0; i<MAX_RAYS; ++i){
+	for(i=0; i<world->nrays; ++i){
 		ray = &world -> rays[i];
 		if(ray->start.x < 0 || ray->start.y < 0){
 		}
@@ -160,9 +160,10 @@ void screen_show_chr( char c ) {
 	(void) c;
 }
 
+
 void screen_get_dimensions( size_t *x, size_t *y ) {
-	*x = 40;
-	*y = 30;
+	*x = GRID_MAX_X;
+	*y = GRID_MAX_Y;
 }
 
 /* vim:set ff=dos: */
