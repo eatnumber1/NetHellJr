@@ -7,7 +7,7 @@
 
 #define MAX_RAYS 128
 #define DEFAULT_RAY_LIFETIME 6
-
+#define RAY_SPEED 4
 
 typedef struct {
 	Position start;
@@ -24,6 +24,9 @@ typedef struct {
 void ray_list_init( RayList *rays );
 void ray_init( RayList *rays, pos_t x, pos_t y, Direction a , age_t age );
 bool ray_is_alive( Ray *r );
+
+typedef bool (*RayIterator)( Ray *, void * );
+bool ray_list_foreach( RayList *r, RayIterator f, void *arg );
 
 #endif
 

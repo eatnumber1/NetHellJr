@@ -42,64 +42,62 @@ Direction world_direction_of( Monster *me, Monster *them ) {
 	return d;
 }
 
-#define RAY_SPEED 4
+static bool do_monster_ai( Monster *m, World *w ) {
+	if( m == &w->you ) return true;
+	world_move_monster(w, m, world_direction_of(m, &w->you));
+	return true;
+}
+
+static bool do_ray_movement( Ray *ray ) {
+	switch(ray->angle){
+		case DIREC_N:
+			ray->start.y-=RAY_SPEED;
+			break;
+		case DIREC_NE:
+			ray->start.y-=RAY_SPEED;
+			ray->start.x+=RAY_SPEED;
+			break;
+		case DIREC_E:
+			ray->start.x+=RAY_SPEED;
+			break;
+		case DIREC_SE:
+			ray->start.x+=RAY_SPEED;
+			ray->start.y+=RAY_SPEED;
+			break;
+		case DIREC_S:
+			ray->start.y+=RAY_SPEED;
+			break;
+		case DIREC_SW:
+			ray->start.x-=RAY_SPEED;
+			ray->start.y+=RAY_SPEED;
+			break;
+		case DIREC_W:
+			ray->start.x-=RAY_SPEED;
+			break;
+		case DIREC_NW:
+			ray->start.x-=RAY_SPEED;
+			ray->start.y-=RAY_SPEED;
+			break;
+	}
+	if(world_fall_off_edge(ray->start.x,ray->start.y)){
+		/*could do reflection here if we have time */
+		ray->age-=1;
+		ray->angle = ray_get_flipside(ray->angle);
+	} else {
+		ray->age -= 1;
+
+		/* check intersection against peeps + reduce health */
+	}
+	return true;
+}
+
 void world_tick( World *world ) {
 	int i;
 	Ray *ray;
 	Monster *monster;
 
-	for(i=0; i<world->rays.size; ++i){
-		ray = &world->rays.val[i];
-		
-		if(ray_is_alive(ray)){
-			switch(ray->angle){
-				case DIREC_N:
-					ray->start.y-=RAY_SPEED;
-					break;
-				case DIREC_NE:
-					ray->start.y-=RAY_SPEED;
-					ray->start.x+=RAY_SPEED;
-					break;
-				case DIREC_E:
-					ray->start.x+=RAY_SPEED;
-					break;
-				case DIREC_SE:
-					ray->start.x+=RAY_SPEED;
-					ray->start.y+=RAY_SPEED;
-					break;
-				case DIREC_S:
-					ray->start.y+=RAY_SPEED;
-					break;
-				case DIREC_SW:
-					ray->start.x-=RAY_SPEED;
-					ray->start.y+=RAY_SPEED;
-					break;
-				case DIREC_W:
-					ray->start.x-=RAY_SPEED;
-					break;
-				case DIREC_NW:
-					ray->start.x-=RAY_SPEED;
-					ray->start.y-=RAY_SPEED;
-					break;
-			}
-			if(world_fall_off_edge(ray->start.x,ray->start.y)){
-				/*could do reflection here if we have time */
-				ray->age-=1;
-				ray->angle = ray_get_flipside(ray->angle);
-			} else {
-				ray->age -= 1;
-
-				/* check intersection against peeps + reduce health */
-			}
-		}
-	}
-
-	for( i = 0; i < MAX_MONSTERS; i++ ) {
-		monster = &world->monsters.val[i];
-		if( !monster_is_alive(monster) ) continue;
-
-		world_move_monster(world, monster, world_direction_of(monster, &world->you));
-	}
+	ray_list_foreach(&world->rays, (RayIterator) do_ray_movement, NULL);
+	monster_list_foreach(&world->monsters, (MonsterIterator) do_monster_ai, world);
 }
 
 void world_init( World *w ) {
@@ -140,6 +138,7 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 			} else if( err2 != WORLD_ERR_OK ) {
 				return err2;
 			}
+			return WORLD_ERR_OK;
 		case DIREC_SE:
 			err = world_move_monster(w, m, DIREC_S);
 			err2 = world_move_monster(w, m, DIREC_E);
@@ -148,6 +147,7 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 			} else if( err2 != WORLD_ERR_OK ) {
 				return err2;
 			}
+			return WORLD_ERR_OK;
 		case DIREC_SW:
 			err = world_move_monster(w, m, DIREC_S);
 			err2 = world_move_monster(w, m, DIREC_W);
@@ -156,6 +156,7 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 			} else if( err2 != WORLD_ERR_OK ) {
 				return err2;
 			}
+			return WORLD_ERR_OK;
 		case DIREC_NW:
 			err = world_move_monster(w, m, DIREC_N);
 			err2 = world_move_monster(w, m, DIREC_W);
@@ -164,6 +165,7 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 			} else if( err2 != WORLD_ERR_OK ) {
 				return err2;
 			}
+			return WORLD_ERR_OK;
 		case DIREC_S:
 			if( np.y == max_y - 1 ) goto collision;
 			np.y += 1;

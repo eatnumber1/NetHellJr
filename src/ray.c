@@ -11,6 +11,17 @@ void ray_list_init( RayList *rays ) {
 	memset(rays->val, 0, sizeof(Ray) * MAX_RAYS);
 }
 
+bool ray_list_foreach( RayList *rays, RayIterator f, void *arg ) {
+	size_t i;
+	Ray *ray;
+
+	for( i = 0; i < MAX_RAYS; i++ ) {
+		if( ray_is_alive(ray = &rays->val[i]) && !f(ray, arg) )
+			return false;
+	}
+
+	return true;
+}
 
 Direction ray_get_flipside(Direction angle){
 	switch(angle){

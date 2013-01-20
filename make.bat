@@ -1,4 +1,4 @@
-rem vim:ft=dos
+rem vim:ff=dos
 C:
 del NHJR.EXE
 cd TC
