@@ -52,9 +52,7 @@ void screen_display_world(World *world ){
 
 	for(i=0; i<world->rays.size; ++i){
 		ray = &world->rays.val[i];
-		if(ray->start.x < 0 || ray->start.y < 0){
-		}
-		else{
+		if(ray->age > 0){
 			screen_draw_ray(screen_grid_to_coordinate(ray->start.x),
 					  screen_grid_to_coordinate(ray->start.y),
 					  ray->angle,
