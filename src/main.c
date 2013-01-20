@@ -38,7 +38,14 @@ int main() {
 	monster_init(&world.monsters, 'Z', 5, 10, 5, 8);
 	monster_init(&world.monsters, 'V', 5, 10, 8, 5);
 
+	ray_init(&world.rays, 6, 9, 0);
+	ray_init(&world.rays, 6, 9, 1);
+	ray_init(&world.rays, 6, 9, 2);
 	ray_init(&world.rays, 6, 9, 3);
+	ray_init(&world.rays, 6, 9, 4);
+	ray_init(&world.rays, 6, 9, 5);
+	ray_init(&world.rays, 6, 9, 6);
+	ray_init(&world.rays, 6, 9, 7);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
@@ -50,6 +57,7 @@ int main() {
 	while( true ) {
 		screen_display_world(&world);
 		input_read_and_process();
+		world_tick(&world);
 	}
 }
 
