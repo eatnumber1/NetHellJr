@@ -5,15 +5,48 @@
 #include "screen.h"
 
 #include <stdbool.h>
+#include <assert.h>
 
 int world_fall_off_edge(int x, int y){
 	return (( x < 0 || x > 39) || ( y < 0 || y > 23));
+}
+
+Direction world_direction_of( Monster *me, Monster *them ) {
+	Direction d;
+
+	if( me->pos.x > them->pos.x ) {
+		if( me->pos.y > them->pos.y ) {
+			d = DIREC_NW;
+		} else if( me->pos.y < them->pos.y ) {
+			d = DIREC_SW;
+		} else {
+			d = DIREC_W;
+		}
+	} else if( me->pos.x < them->pos.x ) {
+		if( me->pos.y > them->pos.y ) {
+			d = DIREC_NE;
+		} else if( me->pos.y < them->pos.y ) {
+			d = DIREC_SE;
+		} else {
+			d = DIREC_E;
+		}
+	} else {
+		if( me->pos.y > them->pos.y ) {
+			d = DIREC_N;
+		} else if( me->pos.y < them->pos.y ) {
+			d = DIREC_S;
+		} else {
+			assert(false);
+		}
+	}
+	return d;
 }
 
 #define RAY_SPEED 4
 void world_tick( World *world ) {
 	int i;
 	Ray *ray;
+	Monster *monster;
 
 	for(i=0; i<world->rays.size; ++i){
 		ray = &world->rays.val[i];
@@ -60,27 +93,36 @@ void world_tick( World *world ) {
 			}
 		}
 	}
+
+	for( i = 0; i < MAX_MONSTERS; i++ ) {
+		monster = &world->monsters.val[i];
+		if( !monster_is_alive(monster) ) continue;
+
+		world_move_monster(world, monster, world_direction_of(monster, &world->you));
+	}
 }
 
 void world_init( World *w ) {
-	monster_list_init(&w->monsters);
+	monster_list_init(&w->monsters, &w->you);
 	ray_list_init(&w->rays);
 }
 
-static bool is_collision( MonsterList *m, Position *p ) {
-	size_t i;
+static bool single_is_not_collision( Monster *m, Position *p ) {
+	Position *mp;
 
-	for( i = 0; i < m->size; i++ ) {
-		Position *mp = &m->val[i].pos;
-		if( mp->x == p->x && mp->y == p->y ) return true;
-	}
-	return false;
+	mp = &m->pos;
+	return mp->x != p->x || mp->y != p->y;
+}
+
+static bool is_collision( MonsterList *m, Position *p ) {
+	return !monster_list_foreach(m, (MonsterIterator) single_is_not_collision, p);
 }
 
 WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 	static size_t max_x, max_y;
 	static bool has_dimensions = false;
 	Position np;
+	WorldError err, err2;
 
 	if( !has_dimensions ) {
 		screen_get_dimensions(&max_x, &max_y);
@@ -90,6 +132,38 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 	np.x = m->pos.x;
 	np.y = m->pos.y;
 	switch( d ) {
+		case DIREC_NE:
+			err = world_move_monster(w, m, DIREC_N);
+			err2 = world_move_monster(w, m, DIREC_E);
+			if( err != WORLD_ERR_OK ) {
+				return err;
+			} else if( err2 != WORLD_ERR_OK ) {
+				return err2;
+			}
+		case DIREC_SE:
+			err = world_move_monster(w, m, DIREC_S);
+			err2 = world_move_monster(w, m, DIREC_E);
+			if( err != WORLD_ERR_OK ) {
+				return err;
+			} else if( err2 != WORLD_ERR_OK ) {
+				return err2;
+			}
+		case DIREC_SW:
+			err = world_move_monster(w, m, DIREC_S);
+			err2 = world_move_monster(w, m, DIREC_W);
+			if( err != WORLD_ERR_OK ) {
+				return err;
+			} else if( err2 != WORLD_ERR_OK ) {
+				return err2;
+			}
+		case DIREC_NW:
+			err = world_move_monster(w, m, DIREC_N);
+			err2 = world_move_monster(w, m, DIREC_W);
+			if( err != WORLD_ERR_OK ) {
+				return err;
+			} else if( err2 != WORLD_ERR_OK ) {
+				return err2;
+			}
 		case DIREC_S:
 			if( np.y == max_y - 1 ) goto collision;
 			np.y += 1;
@@ -106,6 +180,8 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 			if( np.x == 0 ) goto collision;
 			np.x -= 1;
 			break;
+		default:
+			assert(false);
 	}
 	if( is_collision(&w->monsters, &np) ) goto collision;
 	m->pos.x = np.x;

@@ -24,7 +24,6 @@ Direction ray_get_flipside(Direction angle){
 		case DIREC_W:
 		case DIREC_NW:
 			return angle-4;
-
 	}
 }
 

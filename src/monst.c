@@ -33,13 +33,29 @@ void monster_set_position( Monster *mon, pos_t x, pos_t y ) {
 	mon->pos.y = y;
 }
 
-void monster_list_init( MonsterList *m ) {
+void monster_list_init( MonsterList *m, Monster *you ) {
 	m->size = 0;
 	memset(m->val, 0, sizeof(Monster) * MAX_MONSTERS);
+	m->you = you;
 }
 
 bool monster_is_alive( Monster *m ) {
 	return m->hp > 0;
+}
+
+bool monster_list_foreach( MonsterList *monsters, MonsterIterator f, void *arg ) {
+	size_t i;
+	Monster *monster;
+
+	if( monsters->you != NULL && monster_is_alive(monsters->you) && !f(monsters->you, arg) )
+		return false;
+
+	for( i = 0; i < MAX_MONSTERS; i++ ) {
+		if( monster_is_alive(monster = &monsters->val[i]) && !f(monster, arg) )
+			return false;
+	}
+
+	return true;
 }
 
 /* vim:set ff=dos: */

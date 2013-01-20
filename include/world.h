@@ -16,6 +16,8 @@ typedef enum {
 } WorldError;
 
 void world_init( World *w );
+WorldError world_move_monster( World *w, Monster *m, Direction d );
+Direction world_direction_of( Monster *me, Monster *them );
 
 #endif
 
