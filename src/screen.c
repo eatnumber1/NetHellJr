@@ -86,11 +86,13 @@ void screen_draw_health(int hp, int maxhp){
 	settextjustify(LEFT_TEXT,CENTER_TEXT);
 	settextstyle(DEFAULT_FONT, HORIZ_DIR, 1); /* 8x8 bitmap font */
 
-	if(maxhp/hp>5){
-		setcolor(CGA_RED);
-	}
-	else{
-		setcolor(CGA_GREEN);
+	if(hp){ /* if alive (avoids div0) */
+		if(maxhp/hp>5){
+			setcolor(CGA_RED);
+		}
+		else{
+			setcolor(CGA_GREEN);
+		}
 	}
 	outtextxy(HUD_X, HUD_Y, status);	
 }
