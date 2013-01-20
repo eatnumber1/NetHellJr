@@ -42,6 +42,9 @@ static void key_fire_down( World *world ) {
 	ray_init(&world->rays, world->you.pos.x, world->you.pos.y, DIREC_S, DEFAULT_RAY_LIFETIME);
 }
 
+static void key_wait() {
+}
+
 static void quit() {
 	screen_kill_graphics();
 	exit(0);
@@ -79,6 +82,8 @@ int main() {
 	input_new_command_char('k', (CommandHandler) key_fire_down, &world);
 	input_new_command_char('j', (CommandHandler) key_fire_left, &world);
 	input_new_command_char('l', (CommandHandler) key_fire_right, &world);
+
+	input_new_command_char('.', (CommandHandler) key_wait, NULL);
 
 	screen_initialize_graphics();
 	while( true ) {
