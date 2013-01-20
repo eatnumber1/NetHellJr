@@ -7,7 +7,7 @@
 
 typedef struct {
 	Position start;
-	angle_t angle;
+	Direction angle;
 } Ray;
 
 typedef struct {
@@ -16,7 +16,7 @@ typedef struct {
 } RayList;
 
 void ray_list_init( RayList *rays );
-void ray_init( RayList *rays, pos_t x, pos_t y, angle_t a );
+void ray_init( RayList *rays, pos_t x, pos_t y, Direction a );
 
 #endif
 /* vim:set ff=dos: */

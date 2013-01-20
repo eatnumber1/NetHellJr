@@ -1,3 +1,4 @@
+#include "direc.h"
 #include "monst.h"
 #include "ray.h"
 #include "world.h"
@@ -106,41 +107,41 @@ void screen_debug_pos(int x, int y){
 	outtextxy(HUD_X,160, status);	
 }
 
-void screen_draw_ray(int startX, int startY, int angle, int color){
+void screen_draw_ray(int startX, int startY, Direction angle, int color){
 	int endX, endY;
 
 	setcolor(color);
 	
 	switch(angle){
-		case 0:
+		case DIREC_N:
 			endX=startX;
 			endY=startY-RAY_LENGTH;
 			break;
-		case 1:
+		case DIREC_NE:
 			endX=startX+RAY_LENGTH_45;
 			endY=startY-RAY_LENGTH_45;
 			break;
-		case 2:
+		case DIREC_E:
 			endX=startX+RAY_LENGTH;
 			endY=startY;
 			break;
-		case 3:
+		case DIREC_SE:
 			endX=startX+RAY_LENGTH_45;
 			endY=startY+RAY_LENGTH_45;
 			break;
-		case 4:
+		case DIREC_S:
 			endX=startX;
 			endY=startY+RAY_LENGTH;
 			break;
-		case 5:
+		case DIREC_SW:
 			endX=startX-RAY_LENGTH_45;
 			endY=startY+RAY_LENGTH_45;
 			break;
-		case 6:
+		case DIREC_W:
 			endX=startX-RAY_LENGTH;
 			endY=startY;
 			break;
-		case 7:
+		case DIREC_NW:
 			endX=startX-RAY_LENGTH_45;
 			endY=startY-RAY_LENGTH_45;
 			break;

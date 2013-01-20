@@ -4,14 +4,17 @@
 #include <stdint.h>
 
 typedef enum {
-	DIRECTION_UP,
-	DIRECTION_DOWN,
-	DIRECTION_LEFT,
-	DIRECTION_RIGHT
+	DIREC_N,
+	DIREC_NE,
+	DIREC_E,
+	DIREC_SE,
+	DIREC_S,
+	DIREC_SW,
+	DIREC_W,
+	DIREC_NW
 } Direction;
 
 typedef uint_fast16_t pos_t;
-typedef uint_fast8_t angle_t;
 
 typedef struct _Position {
 	pos_t x, y;

@@ -1,6 +1,8 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
+#define MAX_COMMANDS 15
+
 typedef void (*CommandHandler)( void * );
 
 typedef union {
@@ -21,8 +23,6 @@ typedef struct {
 void input_new_command( Key key, CommandHandler handler, void *arg );
 void input_new_command_char( char c, CommandHandler handler, void *arg );
 void input_new_command_escaped( char a, char b, CommandHandler handler, void *arg );
-
-#define MAX_COMMANDS 10
 
 #endif
 /* vim:set ff=dos: */

@@ -34,19 +34,19 @@ WorldError world_move_monster( World *w, Monster *m, Direction d ) {
 	np.x = m->pos.x;
 	np.y = m->pos.y;
 	switch( d ) {
-		case DIRECTION_DOWN:
+		case DIREC_S:
 			if( np.y == max_y - 1 ) goto collision;
 			np.y += 1;
 			break;
-		case DIRECTION_UP:
+		case DIREC_N:
 			if( np.y == 0 ) goto collision;
 			np.y -= 1;
 			break;
-		case DIRECTION_RIGHT:
+		case DIREC_E:
 			if( np.x == max_x - 1 ) goto collision;
 			np.x += 1;
 			break;
-		case DIRECTION_LEFT:
+		case DIREC_W:
 			if( np.x == 0 ) goto collision;
 			np.x -= 1;
 			break;

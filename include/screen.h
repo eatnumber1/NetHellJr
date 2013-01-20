@@ -2,9 +2,9 @@
 #define _SCREEN_H_
 
 #include "direc.h"
-#include <stdint.h>
-#include "monst.h"
 #include "world.h"
+
+#include <stdint.h>
 #include <string.h>
 #include <graphics.h>
 
@@ -21,7 +21,7 @@ void screen_display_world(World *world);
 void screen_initialize_graphics();
 void screen_kill_graphics();
 void screen_tick();
-void screen_draw_ray(int startX, int startY, int angle, int color);
+void screen_draw_ray(int startX, int startY, Direction angle, int color);
 void screen_draw_dude(int x, int y, char ch, int color);
 void screen_draw_health(int hp, int maxhp);
 void screen_get_dimensions( size_t *x, size_t *y );

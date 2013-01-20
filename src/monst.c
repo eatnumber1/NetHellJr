@@ -12,6 +12,7 @@ void monster_init_you( Monster *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp
 }
 
 void monster_init( MonsterList *m, char sym, uint_fast8_t hp, uint_fast8_t maxhp, pos_t x, pos_t y ) {
+	assert(m->size != MAX_MONSTERS);
 	monster_init_you(&m->val[m->size++], sym, hp, maxhp, x, y);
 }
 
