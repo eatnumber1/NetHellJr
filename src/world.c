@@ -21,31 +21,31 @@ void world_tick( World *world ) {
 		}
 		else{
 			switch(ray->angle){
-				case 0:
+				case DIREC_N:
 					ray->start.y-=RAY_SPEED;
 					break;
-				case 1:
+				case DIREC_NE:
 					ray->start.y-=RAY_SPEED;
 					ray->start.x+=RAY_SPEED;
 					break;
-				case 2:
+				case DIREC_E:
 					ray->start.x+=RAY_SPEED;
 					break;
-				case 3:
+				case DIREC_SE:
 					ray->start.x+=RAY_SPEED;
 					ray->start.y+=RAY_SPEED;
 					break;
-				case 4:
+				case DIREC_S:
 					ray->start.y+=RAY_SPEED;
 					break;
-				case 5:
+				case DIREC_SW:
 					ray->start.x-=RAY_SPEED;
 					ray->start.y+=RAY_SPEED;
 					break;
-				case 6:
+				case DIREC_W:
 					ray->start.x-=RAY_SPEED;
 					break;
-				case 7:
+				case DIREC_NW:
 					ray->start.x-=RAY_SPEED;
 					ray->start.y-=RAY_SPEED;
 					break;
