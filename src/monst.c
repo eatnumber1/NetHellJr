@@ -58,4 +58,29 @@ bool monster_list_foreach( MonsterList *monsters, MonsterIterator f, void *arg )
 	return true;
 }
 
+void monster_set_health( Monster *m, hp_t hp ) {
+	assert(m->maxhp >= hp);
+	m->hp = hp;
+}
+
+void monster_sub_health( Monster *m, hp_t hp ) {
+	if( m->hp < hp ) {
+		m->hp = 0;
+	} else {
+		m->hp -= hp;
+	}
+}
+
+void monster_add_health( Monster *m, hp_t hp ) {
+	if( m->hp + hp > m->maxhp ) {
+		m->hp = m->maxhp;
+	} else {
+		m->hp += hp;
+	}
+}
+
+hp_t monster_get_health( Monster *m ) {
+	return m->hp;
+}
+
 /* vim:set ff=dos: */

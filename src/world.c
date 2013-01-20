@@ -13,10 +13,10 @@ int world_fall_off_edge(int x, int y){
 	return (( x < 0 || x > 39) || ( y < 0 || y > 23));
 }
 
-int intersects(Monster* monster, Ray* ray){
+bool intersects(Monster* monster, Ray* ray){
 	return
-	((abs(ray->start.x)-abs(monster->pos.x)) < 4) &&
-	((abs(ray->start.y)-abs(monster->pos.y)) < 4);
+	(abs(abs(ray->start.x)-abs(monster->pos.x)) < 2) &&
+	(abs(abs(ray->start.y)-abs(monster->pos.y)) < 2);
 }
 
 Direction world_direction_of( Monster *me, Monster *them ) {
@@ -51,12 +51,46 @@ Direction world_direction_of( Monster *me, Monster *them ) {
 }
 
 static bool do_monster_ai( Monster *m, World *w ) {
+	Direction d;
+
 	if( m == &w->you ) return true;
-	world_move_monster(w, m, world_direction_of(m, &w->you));
+	d = world_direction_of(m, &w->you);
+	/*
+	 * We're already unfair not allowing diagonal movement or shooting.
+	 * Lets only do EITHER shooting or movement
+	 */
+	switch( d ) {
+		case DIREC_N:
+		case DIREC_S:
+		case DIREC_E:
+		case DIREC_W:
+			ray_init(&w->rays, m->pos.x, m->pos.y, d, DEFAULT_RAY_LIFETIME);
+			break;
+		case DIREC_NE:
+		case DIREC_SW:
+		case DIREC_NW:
+		case DIREC_SE:
+			world_move_monster(w, m, d);
+			break;
+		default:
+			assert(false);
+	}
 	return true;
 }
 
-static bool do_ray_movement( Ray *ray ) {
+static bool do_monster_damage( Monster *monster, Ray *ray ) {
+	if( intersects(monster, ray) ) {
+		monster_sub_health(monster, RAY_DAMAGE);
+		if( !monster_is_alive(monster) ) {
+			ray_sub_age(ray, DEFAULT_RAY_LIFETIME / 2);
+		} else {
+			ray_kill(ray);
+		}
+	}
+	return true;
+}
+
+static bool do_ray_movement( Ray *ray, World *world ) {
 	switch(ray->angle){
 		case DIREC_N:
 			ray->start.y-=RAY_SPEED;
@@ -95,6 +129,7 @@ static bool do_ray_movement( Ray *ray ) {
 		ray->age -= 1;
 
 		/* check intersection against peeps + reduce health */
+		monster_list_foreach(&world->monsters, (MonsterIterator) do_monster_damage, ray);
 	}
 	return true;
 }
@@ -104,7 +139,7 @@ void world_tick( World *world ) {
 	Ray *ray;
 	Monster *monster;
 
-	ray_list_foreach(&world->rays, (RayIterator) do_ray_movement, NULL);
+	ray_list_foreach(&world->rays, (RayIterator) do_ray_movement, world);
 	monster_list_foreach(&world->monsters, (MonsterIterator) do_monster_ai, world);
 }
 

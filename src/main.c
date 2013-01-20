@@ -54,18 +54,9 @@ int main() {
 	World world;
 	world_init(&world);
 
-	monster_init_you(&world.you, '@', 1, 30, 20, 15);
-	monster_init(&world.monsters, 'Z', 5, 10, 5, 8);
-	monster_init(&world.monsters, 'V', 5, 10, 8, 5);
-
-	ray_init(&world.rays, 6, 9, 0, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 1, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 2, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 3, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 4, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 5, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 6, DEFAULT_RAY_LIFETIME);
-	ray_init(&world.rays, 6, 9, 7, DEFAULT_RAY_LIFETIME);
+	monster_init_you(&world.you, '@', 30, 30, 20, 15);
+	monster_init(&world.monsters, 'Z', 10, 10, 5, 8);
+	monster_init(&world.monsters, 'V', 10, 10, 8, 5);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);

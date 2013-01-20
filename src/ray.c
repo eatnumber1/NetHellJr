@@ -59,6 +59,29 @@ bool ray_is_alive( Ray *r ) {
 	return r->age != 0;
 }
 
+ray_age_t ray_get_age( Ray *r ) {
+	return r->age;
+}
+
+void ray_set_age( Ray *r, ray_age_t age ) {
+	r->age = age;
+}
+
+void ray_sub_age( Ray *r, ray_age_t diff ) {
+	if( r->age < diff ) {
+		r->age = 0;
+	} else {
+		r->age -= diff;
+	}
+}
+
+void ray_add_age( Ray *r, ray_age_t diff ) {
+	r->age += diff;
+}
+
+void ray_kill( Ray *r ) {
+	r->age = 0;
+}
 
 /* vim:set ff=dos: */
 
