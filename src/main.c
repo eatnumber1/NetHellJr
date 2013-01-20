@@ -10,20 +10,36 @@
 #include <stdint.h>
 
 
-static void key_down( World *world ) {
+static void key_s( World *world ) {
 	world_move_monster(world, &world->you, DIREC_S);
 }
 
-static void key_up( World *world ) {
+static void key_n( World *world ) {
 	world_move_monster(world, &world->you, DIREC_N);
 }
 
-static void key_left( World *world ) {
+static void key_w( World *world ) {
 	world_move_monster(world, &world->you, DIREC_W);
 }
 
-static void key_right( World *world ) {
+static void key_e( World *world ) {
 	world_move_monster(world, &world->you, DIREC_E);
+}
+
+static void key_ne( World *world ) {
+	world_move_monster(world, &world->you, DIREC_NE);
+}
+
+static void key_se( World *world ) {
+	world_move_monster(world, &world->you, DIREC_SE);
+}
+
+static void key_sw( World *world ) {
+	world_move_monster(world, &world->you, DIREC_SW);
+}
+
+static void key_nw( World *world ) {
+	world_move_monster(world, &world->you, DIREC_NW);
 }
 
 static void key_fire_left( World *world ) {
@@ -59,20 +75,24 @@ int main() {
 	monster_init(&world.monsters, 'V', 10, 10, 8, 5);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
-	input_new_command_escaped(0, 'H', (CommandHandler) key_up, &world);
-	input_new_command_escaped(0, 'P', (CommandHandler) key_down, &world);
-	input_new_command_escaped(0, 'K', (CommandHandler) key_left, &world);
-	input_new_command_escaped(0, 'M', (CommandHandler) key_right, &world);
+	input_new_command_escaped(0, 'H', (CommandHandler) key_n, &world);
+	input_new_command_escaped(0, 'P', (CommandHandler) key_s, &world);
+	input_new_command_escaped(0, 'K', (CommandHandler) key_w, &world);
+	input_new_command_escaped(0, 'M', (CommandHandler) key_e, &world);
 
-	input_new_command_char('w', (CommandHandler) key_up, &world);
-	input_new_command_char('s', (CommandHandler) key_down, &world);
-	input_new_command_char('a', (CommandHandler) key_left, &world);
-	input_new_command_char('d', (CommandHandler) key_right, &world);
+	input_new_command_char('k', (CommandHandler) key_n, &world);
+	input_new_command_char('j', (CommandHandler) key_s, &world);
+	input_new_command_char('h', (CommandHandler) key_w, &world);
+	input_new_command_char('l', (CommandHandler) key_e, &world);
+	input_new_command_char('y', (CommandHandler) key_nw, &world);
+	input_new_command_char('u', (CommandHandler) key_ne, &world);
+	input_new_command_char('b', (CommandHandler) key_sw, &world);
+	input_new_command_char('n', (CommandHandler) key_se, &world);
 
-	input_new_command_char('i', (CommandHandler) key_fire_up, &world);
-	input_new_command_char('k', (CommandHandler) key_fire_down, &world);
-	input_new_command_char('j', (CommandHandler) key_fire_left, &world);
-	input_new_command_char('l', (CommandHandler) key_fire_right, &world);
+	input_new_command_char('w', (CommandHandler) key_fire_up, &world);
+	input_new_command_char('s', (CommandHandler) key_fire_down, &world);
+	input_new_command_char('a', (CommandHandler) key_fire_left, &world);
+	input_new_command_char('d', (CommandHandler) key_fire_right, &world);
 
 	input_new_command_char('.', (CommandHandler) key_wait, NULL);
 

@@ -1,7 +1,7 @@
 #ifndef _INPUT_H_
 #define _INPUT_H_
 
-#define MAX_COMMANDS 15
+#define MAX_COMMANDS 20
 
 typedef void (*CommandHandler)( void * );
 
