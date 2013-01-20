@@ -16,9 +16,24 @@ void screen_display_world(World *world ){
 	size_t i;
 	Monster *mon;
 
-	screen_initialize_graphics();
 	cleardevice();
+	screen_kill_graphics();
+	screen_initialize_graphics();
+
 	screen_draw_health(world->you.hp, world->you.maxhp);
+
+	screen_debug_pos(
+		screen_grid_to_coordinate(world->you.pos.x),
+		screen_grid_to_coordinate(world->you.pos.y)
+		);
+
+	screen_draw_dude(
+		screen_grid_to_coordinate(world->you.pos.x),
+		screen_grid_to_coordinate(world->you.pos.y),
+		world->you.sym,
+		CGA_LIGHTGREEN
+		);
+
 	for(i=0; i<MAX_MONSTERS; ++i){
 		mon = &world->monsters[i];
 		if(mon->hp > 0){ /* alive */
@@ -63,6 +78,16 @@ void screen_draw_health(int hp, int maxhp){
 		setcolor(CGA_GREEN);
 	}
 	outtextxy(HUD_X, HUD_Y, status);	
+}
+
+void screen_debug_pos(int x, int y){
+	char status[8];
+
+	sprintf(status, "%d %d", x, y);
+	settextjustify(LEFT_TEXT,CENTER_TEXT);
+	settextstyle(DEFAULT_FONT, HORIZ_DIR, 1); /* 8x8 bitmap font */
+
+	outtextxy(HUD_X,160, status);	
 }
 
 void screen_draw_ray(int startX, int startY, int angle, int color){

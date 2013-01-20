@@ -43,10 +43,12 @@ int main() {
 	input_new_command_escaped(0, 'K', (CommandHandler) key_left, &world);
 	input_new_command_escaped(0, 'M', (CommandHandler) key_right, &world);
 
+	screen_initialize_graphics();
 	while( true ) {
 		screen_display_world(&world);
 		input_read_and_process();
 	}
+	screen_kill_graphics();
 }
 
 /* vim:set ff=dos: */
