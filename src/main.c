@@ -71,8 +71,8 @@ int main() {
 	world_init(&world);
 
 	monster_init_you(&world.you, '@', 30, 30, 20, 15);
-	monster_init(&world.monsters, 'Z', 10, 10, 5, 8);
-	monster_init(&world.monsters, 'V', 10, 10, 8, 5);
+	monster_init(&world.monsters, 'Z', 10, 10, 5, 15);
+	monster_init(&world.monsters, 'V', 10, 10, 35, 15);
 
 	input_new_command_char('q', (CommandHandler) quit, NULL);
 	input_new_command_escaped(0, 'H', (CommandHandler) key_n, &world);

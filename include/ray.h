@@ -8,7 +8,7 @@
 #define MAX_RAYS 128
 #define DEFAULT_RAY_LIFETIME 6
 #define RAY_SPEED 4
-#define RAY_DAMAGE 5
+#define RAY_DAMAGE 1
 
 typedef unsigned int ray_age_t;
 
