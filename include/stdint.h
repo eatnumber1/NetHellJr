@@ -3,7 +3,6 @@
 
 typedef int uint_fast8_t;
 typedef int uint_fast16_t;
-typedef int size_t;
 
 #endif
 

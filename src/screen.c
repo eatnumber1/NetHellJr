@@ -1,11 +1,12 @@
-#include "screen.h"
-#include "world.h"
-
+#include "direc.h"
 #include <stdint.h>
+#include "monst.h"
+#include "world.h"
+#include "screen.h"
 
 int gd = CGAC1, gm; /* CGAC1 =1 --> 320x200 palette 1; 1 page */
 int RES_X = 320, RES_Y = 200;
-int GRID_MAX_X = 40, GRID_MAX_Y = 30;
+int GRID_MAX_X = 39, GRID_MAX_Y = 29;
 int CENTER_X = 160, CENTER_Y = 100;
 
 int RAY_LENGTH=20, RAY_LENGTH_45=14;
@@ -147,8 +148,8 @@ void screen_show_chr( char c ) {
 }
 
 void screen_get_dimensions( size_t *x, size_t *y ) {
-	*x = 40;
-	*y = 30;
+	*x = GRID_MAX_X;
+	*y = GRID_MAX_Y;
 }
 
 /* vim:set ff=dos: */

@@ -1,10 +1,12 @@
 #ifndef _SCREEN_H_
 #define _SCREEN_H_
 
-#include "world.h"
-#include <graphics.h>
-
+#include "direc.h"
 #include <stdint.h>
+#include "monst.h"
+#include "world.h"
+#include <string.h>
+#include <graphics.h>
 
 extern int gd, gm;
 extern int RES_X, RES_Y;

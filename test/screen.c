@@ -1,8 +1,11 @@
-#include "screen.h"
+#include "direc.h"
+#include <stdint.h>
+#include <string.h>
+#include "monst.h"
 #include "world.h"
+#include "screen.h"
 
 #include <stdio.h>
-#include <stdint.h>
 
 static void print_monster( Monster *monster ) {
 	printf("%c (%d,%d) HP:%d/%d", monster->sym, monster->pos.x, monster->pos.y, monster->hp, monster->maxhp);
